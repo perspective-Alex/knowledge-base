@@ -1,0 +1,6 @@
+.stack-work/
+knBase.cabal
+.idea/
+.ideavimrc
+*.iml
+*~
