@@ -1,6 +1,6 @@
 RESOURCES_DIR = ./resources
 CONTENT_FILE = ./data/ex2.txt
-MORPH_FILE = ./data/mf2.txt
+MORPH_FILE = ./data/mf_ex2.txt
 
 mf:
 	$(RESOURCES_DIR)/mystem -n -i -d $(CONTENT_FILE) $(MORPH_FILE)
