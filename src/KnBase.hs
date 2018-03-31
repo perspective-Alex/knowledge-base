@@ -24,11 +24,11 @@ defMain = do
     { mfData    = T.unpack(decodeUtf8 mf)
     ; origTxt   = T.unpack(decodeUtf8 f)
     ; txt       = changeExtraSymb origTxt
-    ; wordsInfo = getWordProp (words txt) mfData
-    ; wLemm     = map (\x -> getWordLemma x mfData)
-    ; rdTxt     = txt --unwords $ wLemm (words txt) 
-    ; vertices  = buildVertices mfData (words txt)
-    ; edges     = buildEdges mfData (words txt)
+    ; allWords  = words txt 
+    ; rdTxt     = txt
+    ; dict      = initDict allWords mfData
+    ; vertices  = buildVertices dict
+    ; edges     = buildEdges dict mfData allWords
     ; graph     = Graph vertices edges
     }
  -- print (getPartOfSpeech "и" mfData)
@@ -38,25 +38,29 @@ defMain = do
     ; resVertices = gVertices resGraph
     ; proportion = truncate (fromIntegral (length resVertices) / 3) 
     ; owCandidates = take proportion $ sortByScore resVertices
-    ; dwCandidates = (mCand rdTxt (dWordSeq mfData owCandidates))
-    ; twCandidates = L.nub (mCand rdTxt (tWordSeq mfData
-                                            dwCandidates owCandidates))
+    ; dwCandidates = take proportion $ sortByScore
+                        (multiCand rdTxt (dWordSeq dict owCandidates))
+    ; twCandidates = take proportion $ sortByScore
+                        (multiCand rdTxt (tWordSeq dict owCandidates))
     }
   time1 <- getSystemTime
+  {-
   putStrLn "Final Graph:" 
   uprint resGraph 
   time2 <- getSystemTime
   print (systemSeconds time2 - systemSeconds time1)
+  -}
   putStrLn "One-Word-Candidates:" 
   mapM_ uprint owCandidates 
   putStrLn "\nDouble-Word-Candidates:" 
   mapM_ uprint dwCandidates 
+  {-
   putStrLn "\nTriple-Word-Candidates:" 
   mapM_ uprint twCandidates 
+  -}
   time3 <- getSystemTime
   print $ systemSeconds time3 - systemSeconds time1
   putStrLn $ "iterCount = " ++ show(iterCount) ++ "\n"
---  putStrLn txt
 
 -- iterate computations until score-diff < threshold and get iter_count
 loopComputations :: Float -> (Graph,Int) -> (Graph,Int)
@@ -96,4 +100,4 @@ testMain = do
     ; wLemm     = map (\x -> getWordLemma x mfData)
     ; rdTxt     = unwords $ wLemm (words txt)
     }
-  uprint $ getWordProp (words txt) mfData
+  uprint $ initDict (words txt) mfData

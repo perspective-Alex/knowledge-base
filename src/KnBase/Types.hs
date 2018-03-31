@@ -4,6 +4,7 @@ import Prelude hiding (Word)
 import Text.Show.Unicode
 
 type Word = String
+type WordLemma = Word
 type Text = [Word]
 type MorphFile = String
 
@@ -29,4 +30,40 @@ data WordProp = Prop
   , wLemma :: Word
   , wPOS :: PartOfSpeech
   }
-  deriving(Eq,Show)
+ deriving(Eq,Show)
+
+newtype AssocList k v = AssocList {alData :: [(k, v)]}
+ deriving (Eq,Show)
+
+alAdd :: WordLemma -> PartOfSpeech -> Word 
+      -> Dictionary 
+      -> Dictionary 
+alAdd wl pos w al1 = case lookup wl (alData al1) of
+  Nothing -> AssocList ((wl, (pos,[w])) : alData al1)
+  Just val -> AssocList (map change (alData al1))
+    where
+      change x@(xwl, (xpos, xws)) =
+          if xwl == wl
+          then
+            if w `elem` xws
+            then x
+            else (xwl, (xpos, w:xws))
+          else x
+
+alFoldr :: ((k,a) -> b -> b) -> b -> AssocList k a -> b
+alFoldr f acc al = go acc al 
+  where
+    go acc (AssocList []) = acc
+    go acc (AssocList (x:xs)) = f x (go acc (AssocList xs))
+
+type Dictionary = AssocList WordLemma (PartOfSpeech, [Word])
+
+getDictWords :: WordLemma -> Dictionary -> [Word]
+getDictWords wl d = case lookup wl (alData d) of 
+  Nothing -> ["NoSuchLemmaInDict"]
+  Just (_,ww) -> ww
+
+getDictPOS:: WordLemma -> Dictionary -> PartOfSpeech 
+getDictPOS wl d = case lookup wl (alData d) of 
+  Nothing -> Smth "NoSuchLemmaInDict"
+  Just (pos,_) -> pos
