@@ -1,4 +1,0 @@
-./resources/mystem -n -i -d ./data/t1.txt ./data/mf_t1.txt
-stack build
-stack exec knBase ./data/t1.txt ./data/mf_t1.txt
-"зона обитаемость который по-английски называться NotRussianWord NotRussianWord — это область в космос с наиболее благоприятный условие для жизнь земной тип"
