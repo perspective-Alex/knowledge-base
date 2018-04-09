@@ -1,0 +1,3 @@
+./resources/mystem -n -i -d ./data/books/astronomy.txt ./data/books/mf_astronomy.txt
+stack build
+stack exec knBase ./data/books/astronomy.txt ./data/books/mf_astronomy.txt
