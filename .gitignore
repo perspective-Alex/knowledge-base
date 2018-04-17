@@ -3,4 +3,5 @@ knBase.cabal
 .idea/
 .ideavimrc
 *.iml
+*.swp
 *~
