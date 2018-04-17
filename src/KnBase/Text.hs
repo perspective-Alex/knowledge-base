@@ -114,10 +114,12 @@ lemmTxt :: MorphFile -> Text -> Text
 lemmTxt mf txt = map (\w -> getWordLemma w mf) txt
 
 lemmOrigContent :: MorphFile -> String -> Text
-lemmOrigContent mf str = lemmTxt mf (words restxt)
+lemmOrigContent mf str = lemmTxt mf ((words . surroundDelimeters) str)
+
+surroundDelimeters :: String -> String
+surroundDelimeters = foldMap (surrDelims)
   where
-    restxt = foldMap (boundDelimeters) str
-    boundDelimeters c = 
+    surrDelims c = 
       if c `elem` delimiters
       then [' ',c,' ']
       else [c]
