@@ -23,6 +23,12 @@ instance Show Graph where
   show (Graph v e) = "MyGraph:\n" ++ 
                      "Vertices: " ++ ushow v ++ "\n" ++
                      "Edges: " ++ ushow e ++ "\n"
+printGraph :: Graph -> IO ()
+printGraph (Graph vv ee) = do
+  putStrLn "Vertices:"
+  mapM_ (uprint) vv
+  putStrLn "Edges:"
+  mapM_ (uprint) ee
 
 data PartOfSpeech = Noun | Adjective | Verb | Adverb | Smth String
   deriving(Eq,Show)
@@ -90,3 +96,21 @@ getDictLemma w d = findLemma (alData d)
     findLemma ((wl,(_,wf,_)):xs) =
       if w `elem` wf then Just wl
                      else findLemma xs
+
+data Keywords = Kwds
+  { oneWord  :: [Vertice]
+  , twoWords :: [Vertice]
+  }
+  deriving (Eq)
+
+instance Show Keywords where
+  show (Kwds ow dw) = "Keywords:\n" ++ 
+                     "One-Word-instances:" ++ ushow ow ++ "\n" ++
+                     "Double-Word-instances:" ++ ushow dw ++ "\n"
+
+printKeywords :: Keywords -> IO ()
+printKeywords (Kwds ow dw) = do
+  putStrLn "One-Word-instances:"
+  mapM_ (uprint) ow
+  putStrLn "Double-Word-instances:"
+  mapM_ (uprint) dw

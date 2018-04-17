@@ -1,6 +1,9 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module KnBase where
 
 import KnBase.Structures
+import KnBase.Statistics
 import KnBase.Keywords
 import KnBase.Text
 
@@ -14,54 +17,71 @@ import System.Environment
 
 defMain :: IO ()
 defMain = do
-  fp:mfp:_ <- getArgs
+  time1 <- getSystemTime
+  fp:mfp:outfp:_ <- getArgs
   mf <- DBC.readFile mfp 
   f <- DBC.readFile fp
+  writeFile outfp ""
   let 
     { mfData    = T.unpack(decodeUtf8 mf)
-    ; origTxt   = T.unpack(decodeUtf8 f)
-    ; txt       = changeExtraSymb origTxt
+    ; origTxt   = surroundDelimeters (T.unpack(decodeUtf8 f))
+    }
+  keywords <- getKeywords origTxt mfData
+  postKeyw keywords origTxt outfp
+  time3 <- getSystemTime
+  print $ systemSeconds time3 - systemSeconds time1
+
+getKeywords :: String -> String -> IO (Keywords)
+getKeywords origTxt mfData = do
+  let 
+    { txt       = changeExtraSymb origTxt
     ; allWords  = words txt
     ; dict      = initDict allWords mfData
     ; graph     = buildGraph dict mfData allWords 
     }
   let
-    { resGraph = fst $ loopComputations threshold (graph,0)
-    ; iterCount = snd $ loopComputations threshold (graph,0)
+    { algRes = loopComputations threshold (graph,0)
+    ; resGraph = fst algRes
+    ; iterCount = snd algRes
     ; resVertices = gVertices resGraph
-    ; proportion = truncate (fromIntegral (length resVertices) / 5) 
-    ; owCandidates = take proportion $ sortByScore resVertices
+    ; proportion = truncate (fromIntegral (length resVertices) / 3) 
+    ; owCandidates = take 30 $ sortByScore resVertices
     ; reqEdges     = filter (isOneWordCand owCandidates) (gEdges resGraph)  
-    ; dwCandidates = take proportion $ sortByScore
+    ; dwCandidates = sortByScore
                         (multiCand txt (dWordSeq dict reqEdges))
-    ; twCandidates = take proportion $ sortByScore
+    ; twCandidates = sortByScore
                         (multiCand txt (tWordSeq dict reqEdges))
+    ; keywords = Kwds owCandidates dwCandidates
     }
-  time1 <- getSystemTime
   --mapM_ uprint $ listCoOccur (gVertices graph) mfData allWords
   --uprint $ length (gEdges graph)
   --mapM_ uprint $ alData dict 
+  printKeywords keywords
+  {-
   putStrLn "One-Word-Candidates:" 
   mapM_ uprint owCandidates 
   putStrLn "\nDouble-Word-Candidates:" 
   mapM_ uprint dwCandidates 
-  {-
   putStrLn "\nTriple-Word-Candidates:" 
   mapM_ uprint twCandidates 
   -}
-  time3 <- getSystemTime
-  print $ systemSeconds time3 - systemSeconds time1
   putStrLn $ "iterCount = " ++ show(iterCount) ++ "\n"
+  return (keywords)
 
 
-postKeyw :: IO ()
-postKeyw = do
-  fp:mfp:_ <- getArgs
-  mf <- DBC.readFile mfp 
-  f <- DBC.readFile fp
-  let 
-    { mfData   = T.unpack(decodeUtf8 mf)
-    ; txt   = T.unpack(decodeUtf8 f)
-    ; lemmedTxt = lemmOrigContent mfData txt
+postKeyw :: Keywords -> String -> FilePath -> IO ()
+postKeyw kwds txt outFilePath = do
+  let
+    { owKwds = oneWord kwds
+    ; dwKwds = twoWords kwds
+    ; sentences = initSentText txt
     }
-  mapM_ uprint lemmedTxt
+  writeKeywords outFilePath owKwds sentences
+  writeKeywords outFilePath dwKwds sentences
+
+writeKeywords :: FilePath -> [Vertice] -> SentText -> IO ()
+writeKeywords _ [] _ = return ()
+writeKeywords fp (v:vs) sentences = do
+  appendFile fp $ "\n\n" ++ ushow v ++ "\n\n"
+  appendFile fp $ ushow (sentencesWithKeyword (fst v) sentences)
+  writeKeywords fp vs sentences
