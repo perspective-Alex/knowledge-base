@@ -3,14 +3,8 @@ module KnBase.Text where
 import KnBase.Structures
 import Prelude hiding (Word)
 import Data.List
+import qualified Data.HashMap.Strict as HMap
 import Data.List.Split (wordsBy)
-
-{-
--- extract word properties from MorphFile
-getWordProp :: Text -> MorphFile -> [WordProp]
-getWordProp txt mf = map (\w -> Prop w
-     (getWordLemma w mf) (getPartOfSpeech w mf)) txt 
--}
 
 cyrillicSymbols :: String
 cyrillicSymbols = ['а' .. 'я'] ++ ['А' .. 'Я']
@@ -19,7 +13,7 @@ sentDelimiters :: String
 sentDelimiters = ".?!"
 
 delimiters :: String
-delimiters = ".?!@#$%^&*(){}[]\\|/`~№:;"
+delimiters = ",.?!@#$%^&*(){}[]\\|/`~№\":;"
 
 windowSize :: Int
 windowSize = 2
@@ -39,83 +33,89 @@ changeExtraSymb str = map extraSymb str
         '_' -> ' '
         _   -> s
 
--- make dictionary based on word's lemmas
-initDict :: Text -> MorphFile -> Dictionary
-initDict txt mf = textToDict (AssocList []) txt
+initDictionary :: MorphFile -> Dictionary
+initDictionary mf = initDict (lines mf) HMap.empty
   where
-    textToDict :: Dictionary -> Text -> Dictionary
-    textToDict dict [] = dict
-    textToDict dict (x:xs) = textToDict (addElem x dict) xs 
+    initDict :: [String] -> Dictionary -> Dictionary
+    initDict [] hm = hm
+    initDict (x:xs) hm = initDict xs newDict
       where
-        addElem :: Word -> Dictionary -> Dictionary 
-        addElem w d
-          | pos == Adjective || pos == Noun =
-                alAdd lemma pos w window d
-          | otherwise = d
-          where
-            pos    = getPartOfSpeech w mf
-            lemma  = getWordLemma w mf
-            window = take windowSize xs
-            {-
-            nub $ map (\w -> getWordLemma w mf) $
-              filter (nounOrAdjective) (take windowSize xs)
-                where
-                  nounOrAdjective w = (getPartOfSpeech w mf) `elem`
-                                          [Noun,Adjective]
-                                          -}
-
--- get all nouns and adjectives contained in text
-getReqWords :: Dictionary -> [Word]
-getReqWords = alFoldr (\(_,(_,wl,_)) acc -> wl ++ acc) []
-
--- get word properties from MorphFile
--- (Nothing for ariph symbols, delims, etc.)
-getWordInfo :: Word -> [String] -> Maybe String
-getWordInfo _ [] = Nothing 
-getWordInfo w (x:xs)
-    | takeWhile (/= '{') x == w = Just x
-    | otherwise = getWordInfo w xs
-
-getPartOfSpeech :: Word -> MorphFile -> PartOfSpeech
-getPartOfSpeech w mf 
-    | pOS == "S"    = Noun
-    | pOS == "A"    = Adjective
-    | pOS == "V"    = Verb
-    | pOS == "ADV"  = Adverb
-    | otherwise = Smth pOS
-  where
-    pOS = gPOS $ getWordInfo w (lines mf)
-    gPOS :: Maybe String -> String
-    gPOS Nothing  = "undefined" -- its temporary decision, ofc its wrong
-    gPOS (Just []) = "undefined" -- its temporary decision, ofc its wrong
-    gPOS (Just (y:ys))
-      | y == '='  = extrPOS ys
-      | otherwise = gPOS (Just ys)
-    extrPOS (z:zs) = if [el | el <- ['A' .. 'Z'], el == z] == []
-                      then []
-                      else z : extrPOS zs
-
-getWordLemma :: Word -> MorphFile -> Word
-getWordLemma w mf = lemm $ getWordInfo w (lines mf) 
-  where
-    lemm :: Maybe String -> Word
-    lemm info =
-      case info of 
-        Nothing -> w
-        Just str ->
-          if isInfixOf "??" iTail
-          then "NotRussianWord"
-          else takeWhile (/= '=') iTail 
+        newDict = HMap.insert k properties hm
+        properties = parseRaw raw
+        finalPos = wPOS properties
+        (k,raw) = span (/= '{') x
+        parseRaw :: String -> WordProperties
+        parseRaw str =
+          if isInfixOf "??" str
+          then Prop k (Smth "EnglishWord")
+          else Prop (drop 1 finLemma) pos -- drop '{'
             where
-              iTail = tail (dropWhile (/= '{') str)
+              (lemma, rtail) = span (/= '=') str
+              finLemma = delete '?' lemma --delete morphological ambiguity
+              parsePos str2 =
+                takeWhile (\l -> l /= ',' && l /= '=') (drop 1 str2)
+              pos =
+                case parsePos rtail of
+                  "S" -> Noun
+                  "V" -> Verb
+                  "A" -> Adjective
+                  "Adv" -> Adverb
+                  _ -> Smth (parsePos rtail)
 
--- text with lemmed words (required text with words only)
-lemmTxt :: MorphFile -> Text -> Text
-lemmTxt mf txt = map (\w -> getWordLemma w mf) txt
 
-lemmOrigContent :: MorphFile -> String -> Text
-lemmOrigContent mf str = lemmTxt mf ((words . surroundDelimeters) str)
+-- | connect lemma with it's properties form text and MorphFile
+initLemmaProps :: Text -> Dictionary -> LemmaProperties
+initLemmaProps txt dict = textToLP (AssocList []) txt
+  where
+    textToLP :: LemmaProperties -> Text -> LemmaProperties
+    textToLP lp [] = lp
+    textToLP lp (x:xs) = textToLP (addElem x) xs 
+      where
+        addElem w =
+          case maybePos of 
+            Nothing -> lp
+            Just p -> if p == Adjective || p == Noun 
+                      then alAdd lemma p w window lp
+                      else lp
+          where
+            (maybePos,lemma) = parseVal $ HMap.lookup w dict
+            parseVal v =
+              case v of
+                Nothing -> (Nothing, "NoLemm")
+                Just prop -> (Just (wPOS prop), wLemma prop)
+            window = take windowSize xs
 
+getDictWordPOS :: Word -> Dictionary -> Maybe PartOfSpeech
+getDictWordPOS w d =
+  case HMap.lookup w d of
+    Nothing -> Nothing 
+    Just v -> Just (wPOS v)
+
+getDictWordLemma :: Word -> Dictionary -> Maybe WordLemma 
+getDictWordLemma w d =
+  case HMap.lookup w d of
+    Nothing -> Nothing
+    Just v -> Just (wLemma v)
+
+-- | text with lemmed words (required text with words only)
+lemmTxt :: Dictionary -> Text -> Text
+lemmTxt dict txt = map (\w -> changeWithLemma w dict) txt
+
+-- | Lemmatize original text, it may contain english words,
+-- some signs and digits which have to stay unchanged
+lemmOrigContent :: Dictionary -> String -> Text
+lemmOrigContent dict str = map (\w -> changeWithLemma w dict) (words str)
+
+-- | unknown words stay unchanged
+changeWithLemma :: Word -> Dictionary -> Word
+changeWithLemma w dict =
+  case getDictWordLemma w dict of
+    Nothing -> w
+    Just l -> l
+
+-- | surround all delimeters with brackets to make them separate tokens
+-- >>> surroundDelimeters "word."
+-- "word . "
 surroundDelimeters :: String -> String
 surroundDelimeters = foldMap (surrDelims)
   where
@@ -124,27 +124,33 @@ surroundDelimeters = foldMap (surrDelims)
       then [' ',c,' ']
       else [c]
 
-{-
--- list of pairs of words occur together in window with given size
-wCoOccur :: Text -> Int -> [(Word,Word)]
-wCoOccur txt n = zipWith (\w1 w2 -> (w1,w2)) txt (drop (n-1) txt)
+delLineBreak :: String -> String
+delLineBreak [] = []
+delLineBreak (x:xs) =
+  if x == '\n'
+  then delLineBreak xs
+  else x : delLineBreak xs
 
-wNCoOccur :: Text -> Int -> [(Word,Word)]
-wNCoOccur txt n =
-    case n of
-      1 -> []
-      _ -> (wCoOccur txt n) ++ (wNCoOccur txt (n-1))
--}
+delWordBreak :: String -> String
+delWordBreak [] = []
+delWordBreak [x] = [x]
+delWordBreak (x:y:xs) =
+  if [x,y] == "-\n"
+  then delWordBreak xs
+  else x : y : delWordBreak xs
 
--- case: words occur together in window with given size
-wCoOccur :: Word -> Word -> Text -> Int -> Bool 
-wCoOccur w1 w2 txt n = any (==True) (zipWith together txt (drop (n-1) txt))
+preProcess :: String -> String
+preProcess = surroundDelimeters
+
+-- | Extract substrings begins with word1 and ends with word2
+subStrings :: Text -> (Word, Word) -> [Text]
+subStrings [] _ = []
+subStrings txt (f,l) = 
+  if snd slice1 /= [] && snd slice2 /= [] -- txt still contains substring 
+  then (fst slice2 ++ [border]) : subStrings sTail (f,l)
+  else []
   where
-    together el1 el2 = (el1 == w1) && (el2 == w2)
-                    || (el1 == w2) && (el2 == w1)
-
-wNCoOccur :: Word -> Word -> Text -> Int -> Bool
-wNCoOccur w1 w2 txt n =
-    case n of
-      1 -> False 
-      _ -> (wCoOccur w1 w2 txt n) || (wNCoOccur w1 w2 txt (n-1))
+    slice1 = span (/= f) txt
+    slice2 = span (/= l) (snd slice1)
+    sTail = tail $ snd slice2
+    border = head $ snd slice2
