@@ -1,6 +1,8 @@
 .stack-work/
 knBase.cabal
 .idea/
+.data/
+.results/
 .ideavimrc
 *.iml
 *.swp
