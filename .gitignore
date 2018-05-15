@@ -1,8 +1,9 @@
 .stack-work/
 knBase.cabal
 .idea/
-.data/
-.results/
+data/
+results/
+resources/Tomita/tomita-parser
 .ideavimrc
 *.iml
 *.swp
