@@ -1,0 +1,890 @@
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+Term  ->  Word[*графа]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*графа] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*графа] ::
+
+
+Whole  ->  MulTerm[*графа] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*графа]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*графа] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*графа] ::
+
+
+Whole  ->  MulTerm[*графа] ::
+
+
+Term  ->  Word[*применения]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*применения] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*применения] ::
+
+
+Whole  ->  MulTerm[*применения] ::
+
+
+Term  ->  Word[*операций]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*операций]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*операций] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*операций] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*операций] ::
+
+
+Whole  ->  MulTerm[*операций] ::
+
+
+MulTerm  ->  Term[применения]  MulTerm[*операций] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*применения операций] ::
+
+
+Whole  ->  MulTerm[*применения операций] ::
+
+
+Term  ->  Word[*удаления]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*удаления]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*удаления] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*удаления] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*удаления] ::
+
+
+Whole  ->  MulTerm[*удаления] ::
+
+
+MulTerm  ->  Term[операций]  MulTerm[*удаления] ::
+    Ok: c-agr(0,1) 
+
+
+MulTerm  ->  Term[операций]  MulTerm[*удаления] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*операций удаления] ::
+
+
+Whole  ->  MulTerm[*операций удаления] ::
+
+
+MulTerm  ->  Term[применения]  MulTerm[*операций удаления] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*применения операций удаления] ::
+
+
+Whole  ->  MulTerm[*применения операций удаления] ::
+
+
+Term  ->  Word[*ребра]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*ребра]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*ребра] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*ребра] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*ребра] ::
+
+
+Whole  ->  MulTerm[*ребра] ::
+
+
+MulTerm  ->  Term[удаления]  MulTerm[*ребра] ::
+    Ok: c-agr(0,1) 
+
+
+MulTerm  ->  Term[удаления]  MulTerm[*ребра] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*удаления ребра] ::
+
+
+Whole  ->  MulTerm[*удаления ребра] ::
+
+
+MulTerm  ->  Term[операций]  MulTerm[*удаления ребра] ::
+    Ok: c-agr(0,1) 
+
+
+MulTerm  ->  Term[операций]  MulTerm[*удаления ребра] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*операций удаления ребра] ::
+
+
+Whole  ->  MulTerm[*операций удаления ребра] ::
+
+
+MulTerm  ->  Term[применения]  MulTerm[*операций удаления ребра] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*применения операций удаления ребра] ::
+
+
+Whole  ->  MulTerm[*применения операций удаления ребра] ::
+
+
+Term  ->  Word[*удаления]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*удаления] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*удаления] ::
+
+
+Whole  ->  MulTerm[*удаления] ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+MulTerm  ->  Term[удаления]  MulTerm[*вершины] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*удаления вершины] ::
+
+
+Whole  ->  MulTerm[*удаления вершины] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*удаление]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*удаление] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*удаление] ::
+
+
+Whole  ->  MulTerm[*удаление] ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+MulTerm  ->  Term[удаление]  MulTerm[*вершины] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*удаление вершины] ::
+
+
+Whole  ->  MulTerm[*удаление вершины] ::
+
+
+Term  ->  Word[*удаление]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*удаление] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*удаление] ::
+
+
+Whole  ->  MulTerm[*удаление] ::
+
+
+Term  ->  Word[*ребер]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*ребер] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*ребер] ::
+
+
+Whole  ->  MulTerm[*ребер] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*графу]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*графу] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*графу] ::
+
+
+Whole  ->  MulTerm[*графу] ::
+
+
+Term  ->  Word[*графов]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*графов] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*графов] ::
+
+
+Whole  ->  MulTerm[*графов] ::
+
+
+Term  ->  Word[*ребро]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*ребро] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*ребро] ::
+
+
+Whole  ->  MulTerm[*ребро] ::
+
+
+Term  ->  Word[*эквивалентно]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*эквивалентно]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*эквивалентно] ::
+>> FAILED:
+        grams(0)=S 
+
+
+MulTerm  ->  Term[*эквивалентно] ::
+>> FAILED:
+        grams(0)=S 
+
+
+Term  ->  Word[*вершин]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершин] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершин] ::
+
+
+Whole  ->  MulTerm[*вершин] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*ребер]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*ребер] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*ребер] ::
+
+
+Whole  ->  MulTerm[*ребер] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*путем]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*путем] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*путем] ::
+
+
+Whole  ->  MulTerm[*путем] ::
+
+
+Term  ->  Word[*графа]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*графа]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*графа] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*графа] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*графа] ::
+
+
+Whole  ->  MulTerm[*графа] ::
+
+
+MulTerm  ->  Term[путем]  MulTerm[*графа] ::
+>> FAILED:
+        c-agr(0,1) 
+
+
+Term  ->  Word[*вершина]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершина] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершина] ::
+
+
+Whole  ->  MulTerm[*вершина] ::
+
+
+Term  ->  Word[*конечной]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*конечной] ::
+>> FAILED:
+        grams(0)=S 
+
+
+Term  ->  Word[*вершиной]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершиной] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершиной] ::
+
+
+Whole  ->  MulTerm[*вершиной] ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*пути] ::
+
+
+Whole  ->  MulTerm[*пути] ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*вершинами]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершинами] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершинами] ::
+
+
+Whole  ->  MulTerm[*вершинами] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*ребра]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*ребра] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*ребра] ::
+
+
+Whole  ->  MulTerm[*ребра] ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*пути] ::
+
+
+Whole  ->  MulTerm[*пути] ::
+
+
+MulTerm  ->  Term[ребра]  MulTerm[*пути] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*ребра пути] ::
+
+
+Whole  ->  MulTerm[*ребра пути] ::
+
+
+Term  ->  Word[*сочетания]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*сочетания] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*сочетания] ::
+
+
+Whole  ->  MulTerm[*сочетания] ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+Term  ->  Word[*простой]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*простой] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*простой] ::
+
+
+Whole  ->  MulTerm[*простой] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*конечная]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*конечная] ::
+>> FAILED:
+        grams(0)=S 
+
+
+Term  ->  Word[*вершина]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*вершина]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершина] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*вершина] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершина] ::
+
+
+Whole  ->  MulTerm[*вершина] ::
+
+
+MulTerm  ->  Term[конечная]  MulTerm[*вершина] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*конечная вершина] ::
+
+
+Whole  ->  MulTerm[*конечная вершина] ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*пути] ::
+
+
+Whole  ->  MulTerm[*пути] ::
+
+
+MulTerm  ->  Term[вершина]  MulTerm[*пути] ::
+    Ok: c-agr(0,1) 
+
+
+MulTerm  ->  Term[вершина]  MulTerm[*пути] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*вершина пути] ::
+
+
+Whole  ->  MulTerm[*вершина пути] ::
+
+
+MulTerm  ->  Term[конечная]  MulTerm[*вершина пути] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*конечная вершина пути] ::
+
+
+Whole  ->  MulTerm[*конечная вершина пути] ::
+
+
+Term  ->  Word[*путем]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*путем] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*путем] ::
+
+
+Whole  ->  MulTerm[*путем] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+Term  ->  Word[*конечной]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*конечной] ::
+>> FAILED:
+        grams(0)=S 
+
+
+Term  ->  Word[*простым]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*простым] ::
+>> FAILED:
+        grams(0)=S 
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*конечная]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*конечная] ::
+>> FAILED:
+        grams(0)=S 
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+MulTerm  ->  Term[конечная]  MulTerm[*вершины] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*конечная вершины] ::
+
+
+Whole  ->  MulTerm[*конечная вершины] ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+Term  ->  Word[*пути]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+MulTerm  ->  Term[*пути] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*пути] ::
+
+
+Whole  ->  MulTerm[*пути] ::
+
+
+MulTerm  ->  Term[вершины]  MulTerm[*пути] ::
+    Ok: c-agr(0,1) 
+
+
+MulTerm  ->  Term[вершины]  MulTerm[*пути] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*вершины пути] ::
+
+
+Whole  ->  MulTerm[*вершины пути] ::
+
+
+MulTerm  ->  Term[конечная]  MulTerm[*вершины пути] ::
+    Ok: c-agr(0,1) 
+
+
+Part  ->  MulTerm[*конечная вершины пути] ::
+
+
+Whole  ->  MulTerm[*конечная вершины пути] ::
+
+
+Term  ->  Word[*путем]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*путем] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*путем] ::
+
+
+Whole  ->  MulTerm[*путем] ::
+
+
+********************************** finished relations.cxx **********************************
+
+
+
+========================================== processing relations.cxx ==========================================
+
+Term  ->  Word[*вершины]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*вершины] ::
+    Ok: grams(0)=S 
+
+
+Part  ->  MulTerm[*вершины] ::
+
+
+Whole  ->  MulTerm[*вершины] ::
+
+
+Term  ->  Word[*конечной]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*конечной] ::
+>> FAILED:
+        grams(0)=S 
+
+
+Term  ->  Word[*простым]<kwt=ключевые_слова> ::
+
+
+MulTerm  ->  Term[*простым] ::
+>> FAILED:
+        grams(0)=S 
+
+
+********************************** finished relations.cxx **********************************
+

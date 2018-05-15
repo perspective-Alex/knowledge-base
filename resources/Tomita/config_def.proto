@@ -1,0 +1,17 @@
+encoding "utf8";
+
+TTextMinerConfig {
+  Dictionary = "dict.gzt";
+
+  Input = {File = "input1.txt"}
+  Output = {File = "definition.txt"
+              Format = text}
+
+  Articles = [
+    { Name = "Definition" }
+    ]
+  PrettyOutput = "def.html"
+  Facts = [
+    { Name = "TDefinition" }
+    ]
+}
