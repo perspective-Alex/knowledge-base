@@ -1,6 +1,7 @@
 .stack-work/
 knBase.cabal
 .idea/
+data/
 results/
 resources/Tomita/input1.txt
 .ideavimrc
