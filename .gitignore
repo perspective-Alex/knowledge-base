@@ -4,6 +4,10 @@ knBase.cabal
 data/
 results/
 resources/Tomita/input1.txt
+resources/Tomita/relations.txt
+resources/Tomita/definition.txt
+resources/Tomita/*.bin
+resources/Tomita/*.html
 resources/Tomita/tomita-parser
 .ideavimrc
 *.iml
