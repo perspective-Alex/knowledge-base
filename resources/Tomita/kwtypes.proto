@@ -1,0 +1,5 @@
+import "base.proto";
+import "kwtypes_base.proto";
+import "articles_base.proto";
+
+message keyword : TAuxDicArticle {}

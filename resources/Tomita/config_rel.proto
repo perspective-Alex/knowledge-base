@@ -1,0 +1,18 @@
+encoding "utf8";
+
+TTextMinerConfig {
+  Dictionary = "dict.gzt";
+  PrintRules = "rules.txt"
+
+  Input = {File = "input1.txt"}
+  Output = {File = "relations.txt"
+              Format = text}
+
+  Articles = [
+    { Name = "Relations" }
+    ]
+  PrettyOutput = "rel.html"
+  Facts = [
+    { Name = "TRelation" }
+    ]
+}

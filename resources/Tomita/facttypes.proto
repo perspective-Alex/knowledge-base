@@ -1,0 +1,14 @@
+import "base.proto";
+import "facttypes_base.proto";
+
+message TDefinition: NFactType.TFact
+{
+  required string Term = 1;
+  required string Defin = 2;
+}
+
+message TRelation: NFactType.TFact
+{
+  required string Part = 1;
+  required string Whole = 2;
+}

@@ -1,0 +1,34 @@
+encoding "utf8";
+
+import "base.proto";
+import "articles_base.proto";
+
+import "facttypes.proto";
+import "kwtypes.proto";
+
+TAuxDicArticle "Definition"
+{
+  key = {"tomita:definition.cxx" type=CUSTOM}
+}
+TAuxDicArticle "Relations"
+{
+  key = {"tomita:relations.cxx" type=CUSTOM}
+}
+
+keyword "ключевые_слова"
+{
+  key = {"keywords.txt" type=FILE};
+}
+keyword "глаголы_связки1"
+{
+  key = {"defVerbs.txt" type=FILE};
+}
+
+keyword "глаголы_связки2"
+{
+  key = {"relVerbs1.txt" type=FILE};
+}
+keyword "глаголы_связки3"
+{
+  key = {"relVerbs2.txt" type=FILE};
+}
