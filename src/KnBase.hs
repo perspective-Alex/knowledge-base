@@ -1,5 +1,3 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 module KnBase where
 
 import KnBase.Structures
@@ -37,8 +35,8 @@ defMain = do
     ; kUnion = foldKeywords unionBy keywords
     }
   printKeywordsToSpecFile "./resources/Tomita/keywords.txt" kIntersection 
-  --printOntology kIntersection (concat texts)
-  --      (foldr1 HMap.intersection dicts) outfp
+  printOntology kUnion (concat texts)
+       (foldr1 HMap.union dicts) outfp
   time3 <- getSystemTime
   putStr "Time of work = "
   print $ systemSeconds time3 - systemSeconds time1
