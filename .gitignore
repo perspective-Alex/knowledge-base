@@ -4,6 +4,7 @@ knBase.cabal
 data/
 results/
 resources/Tomita/input1.txt
+resources/Tomita/tomita-parser
 .ideavimrc
 *.iml
 *.swp
